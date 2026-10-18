@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin.html
 Disallow: /api/admin/
 
 Sitemap: https://yubrajkurmi.com.np/sitemap.xml
