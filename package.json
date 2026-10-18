@@ -1,0 +1,28 @@
+{
+  "name": "yuvraj-kurmi-portfolio",
+  "version": "2.0.0",
+  "description": "Full-stack portfolio web app for Yuvraj Kurmi - Systems & AI Engineer",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "portfolio",
+    "systems-engineer",
+    "ai-engineer",
+    "local-first",
+    "c23",
+    "python",
+    "kathmandu"
+  ],
+  "author": "Yuvraj Kurmi <info@yuvrajkurmi.com.np>",
+  "license": "MIT",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0"
+  }
+}

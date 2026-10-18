@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/admin/
+
+Sitemap: https://yubrajkurmi.com.np/sitemap.xml

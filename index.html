@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Yuvraj Kurmi</title>
+  <meta name="description" content="Independent systems and AI engineer in Kathmandu. I build local-first systems that tell the truth.">
+  <meta property="og:title" content="Yuvraj Kurmi">
+  <meta property="og:description" content="I build local-first systems that tell the truth.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e0e" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23111%27/%3E%3Crect x=%279%27 y=%2714%27 width=%274%27 height=%279%27 fill=%27%23fff%27/%3E%3Crect x=%2719%27 y=%279%27 width=%274%27 height=%2714%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fff;
+      --ink: #111;
+      --mute: #6b6b6b;
+      --pad: clamp(1.2rem, 5vw, 4rem);
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+    }
+    @media(prefers-color-scheme:dark) {
+      :root {
+        --bg: #0e0e0e;
+        --ink: #f2f2f2;
+        --mute: #9a9a9a;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+    html {
+      overscroll-behavior: none;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 1rem/1.5 Literata, Georgia, serif;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+    a {
+      color: inherit;
+    }
+    ::selection {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    main {
+      min-height: 100vh;
+      min-height: 100svh;
+      min-height: 100dvh;
+      display: grid;
+      align-content: center;
+      padding: clamp(2.5rem, 7vw, 6rem) var(--pad);
+      position: relative;
+    }
+    h1 {
+      font-weight: 400;
+      font-size: clamp(2rem, 6.8vw, 6.8rem);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+      max-width: min(100%, 17em);
+      text-wrap: balance;
+      overflow-wrap: break-word;
+      word-break: normal;
+      transform: translate3d(0, calc(var(--p, 0px) * -1), 0);
+    }
+    .tk {
+      display: inline-block;
+      transition: opacity .3s;
+    }
+    .tk.out {
+      opacity: 0;
+      transition: opacity .22s;
+    }
+    .tk.in {
+      animation: rise .9s cubic-bezier(.2, .7, .2, 1) backwards;
+      animation-delay: calc(var(--k, 0) * 55ms + 80ms);
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(.45em); }
+    }
+    .tk.m, button {
+      font: inherit;
+      color: inherit;
+      background: linear-gradient(currentColor, currentColor) 0 100%/0 .07em no-repeat,
+                  linear-gradient(90deg, currentColor 50%, transparent 0) 0 100%/.22em .07em repeat-x;
+      border: 0;
+      padding: 0 0 .08em;
+      cursor: pointer;
+      letter-spacing: inherit;
+      transition: background-size .4s cubic-bezier(.2, .7, .2, 1), opacity .3s;
+      touch-action: manipulation;
+    }
+    .tk.m:hover, .tk.m[aria-expanded=true], button:hover, button[aria-expanded=true] {
+      background-size: 100% .07em, .22em .07em;
+    }
+    .tk.m:focus-visible, button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+    }
+    h1:has(.m:hover) .tk:not(:hover) {
+      opacity: .22;
+    }
+    h1:has(.m:hover) .x:not(.m:hover + .x) {
+      opacity: .22;
+    }
+    .x {
+      font-size: max(.34em, 1.02rem);
+      line-height: 1.55;
+      letter-spacing: 0;
+      color: var(--mute);
+      text-wrap: pretty;
+      overflow-wrap: break-word;
+      transition: opacity .3s;
+    }
+    .x[hidden] {
+      display: none;
+    }
+    .x::before { content: " ("; }
+    .x::after { content: ") "; }
+    .x .x { font-size: 1em; }
+    .x button, .x a, .x b { color: var(--ink); }
+    .x b { font-weight: 500; }
+    .x a.go::after { content: " →"; }
+    .w { display: inline-block; }
+    .x:not([hidden]) > .w {
+      animation: flip .55s cubic-bezier(.2, .75, .2, 1) both;
+      animation-delay: var(--d, 0ms);
+    }
+    @keyframes flip {
+      from {
+        opacity: 0;
+        transform: perspective(380px) rotateX(-85deg) translateY(.35em);
+        transform-origin: 50% 0;
+      }
+    }
+    #hint {
+      position: fixed;
+      left: max(var(--pad), env(safe-area-inset-left));
+      bottom: max(1.2rem, env(safe-area-inset-bottom));
+      color: var(--mute);
+      font-size: .95rem;
+      transition: opacity .8s;
+      pointer-events: none;
+      user-select: none;
+    }
+    #hint.off { opacity: 0; }
+    noscript p { padding: 1rem var(--pad); font-size: 1.2rem; }
+    @media (prefers-reduced-motion: reduce) {
+      .tk.in, .x:not([hidden]) > .w { animation: none; }
+      .tk, button, h1 { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="h" aria-live="polite"></h1>
+  </main>
+  <p id="hint">Scroll, or press ↓</p>
+  <noscript>
+    <p>I build local-first systems that tell the truth. Independent systems and AI engineer, Kathmandu. <a href="mailto:info@yuvrajkurmi.com.np">info@yuvrajkurmi.com.np</a> · <a href="https://github.com/BugBasherX">GitHub</a></p>
+  </noscript>
+  <script>
+    const E = "info@yuvrajkurmi.com.np";
+    const GH = "https://github.com/BugBasherX";
+    const RM = matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+    const N = (id, l, x) => `<button type="button" aria-expanded="false" aria-controls="${id}">${l}</button><span class="x" id="${id}" hidden>${x}</span>`;
+
+    const S = [
+      {
+        h: "home",
+        t: "Yuvraj Kurmi",
+        s: "[I:i] [build:build] [local-first:local] [systems:systems] that tell the [truth:truth].",
+        x: {
+          i: `am a self-taught systems and AI engineer in Kathmandu, working independently. Available for contract work on AI systems, low-latency runtimes and local-first apps: <a href="mailto:${E}">${E}</a>, <a href="${GH}" target="_blank" rel="noopener">GitHub</a>, <a class="go" href="#contact">write to me</a>`,
+          build: `end to end, on one desk: architecture, implementation and documentation, made to be inherited and not guessed at. <a class="go" href="#stack">What I build with</a>`,
+          local: `so nothing waits on the network. A C17/23 core handles audio and scheduling, and a Python layer handles reasoning, memory and routing. <a class="go" href="#system">How it fits together</a>`,
+          systems: `six so far: NULL, CIPHERWRAITH, SENTINEL-X, GHOSTPROTOCOL, VOIDLINK and KC Class BHW. <a class="go" href="#work">Open them one by one</a>`,
+          truth: `by naming things honestly. Every project says what it is and what it isn't, and the documentation ships with the code. <a class="go" href="#notes">Read the notes</a>`
+        }
+      },
+      {
+        h: "system",
+        t: "System — Yuvraj Kurmi",
+        s: "[Local-first:local] [systems:systems] are a [voice:voice], a [core:core] and a [mind:mind].",
+        x: {
+          local: `means nothing waits on the network. The runtime never waits on the intelligence layer, and the intelligence layer never waits on external networks.`,
+          systems: `here means NULL: three layers, one process boundary each, so a failure stays inside its layer and gets logged. <a class="go" href="#work">What else I built</a>`,
+          voice: `the interface to the microphone and speaker`,
+          core: `a C17/23 runtime and watchdog that handles I/O, wake-word and speech, plus scheduling, memory management and IPC. <a class="go" href="#stack">The tools behind it</a>`,
+          mind: `a Python intelligence layer for reasoning, memory and routing`
+        }
+      },
+      {
+        h: "work",
+        t: "Work — Yuvraj Kurmi",
+        s: "I built six [systems:systems] that tell the [truth:truth].",
+        x: {
+          systems: `six so far:
+  ${N("w1", "NULL", `a local-first voice assistant, C17/23 core and Python brain, in progress. <b>Truth:</b> the architecture is real; the finished product isn't, yet.`)}
+  ${N("w2", "CIPHERWRAITH", `a credential vault in Python using Fernet (AES-128), in progress. <b>Truth:</b> a learning project on a proven library, not a password manager.`)}
+  ${N("w3", "SENTINEL-X", `a network monitor built on ICMP, in progress. <b>Truth:</b> a ping-based watcher with no deep packet inspection.`)}
+  ${N("w4", "GHOSTPROTOCOL", `access control driven by OpenCV Haar Cascade face detection, in flux. <b>Truth:</b> an experiment that is still changing, and easy to fool.`)}
+  ${N("w5", "VOIDLINK", `ephemeral messaging over Flask and WebSockets, shipped. <b>Truth:</b> a demo of the idea, not a hardened messenger.`)}
+  ${N("w6", "KC Class BHW", `a creator platform with a payment flow for an English-coaching center in Bhairahawa, client work. <b>Truth:</b> built for one real center, not a general-purpose LMS. <a class="go" href="#contact">Work with me</a>`)}.
+  Open any name for what it is and what it isn't.`,
+          truth: `is the line inside every name above: what each project is, and what it isn't. <a class="go" href="#notes">Read the notes</a>`
+        }
+      },
+      {
+        h: "stack",
+        t: "Stack — Yuvraj Kurmi",
+        s: "I work across [systems:systems], [AI:ai], [backend:backend], [frontend:frontend] and [security:security].",
+        x: {
+          systems: `C17/23 runtimes, watchdogs, IPC and process isolation. <a class="go" href="#system">See the architecture</a>`,
+          ai: `local-first pipelines for speech, reasoning and memory, in Python`,
+          backend: `Node.js, Express, SQLite, Flask and WebSockets. <a class="go" href="#work">See it in the work</a>`,
+          frontend: `plain HTML, CSS and JavaScript, built to load fast`,
+          security: `encryption with Fernet (AES-128), access control with OpenCV face detection, and network monitoring over ICMP`
+        }
+      },
+      {
+        h: "notes",
+        t: "Notes — Yuvraj Kurmi",
+        s: "I write the [documentation:docs] alongside the code, so nobody is left [guessing:guess].",
+        x: {
+          docs: `so the write-up ships with the project. Engineering notes are published transparently.`,
+          guess: `at how a system works. Everything here is built to be inherited, not guessed at. <a class="go" href="#system">Read the architecture</a>`
+        }
+      },
+      {
+        h: "contact",
+        t: "Contact — Yuvraj Kurmi",
+        s: "Tell [me:me] what you are [building:bld].",
+        x: {
+          me: `Yuvraj Kurmi, an independent systems and AI engineer in Kathmandu: <a href="mailto:${E}">${E}</a>, <a href="${GH}" target="_blank" rel="noopener">GitHub</a>`,
+          bld: `and who it is for. Contract work on AI systems, low-latency runtimes and local-first apps. A short message is enough: <a href="mailto:${E}">write to me</a>. <a class="go" href="#home">Back to the beginning</a>`
+        }
+      }
+    ];
+
+    const q = s => [...document.querySelectorAll(s)];
+    const h = document.getElementById("h");
+    const hint = document.getElementById("hint");
+    let cur = -1, els = new Map(), busy = false, acc = 0, idle;
+
+    // Detect touch device for adaptive hints
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      if (hint) hint.textContent = "Swipe, or tap words to open";
+    }
+
+    const idx = k => S.findIndex(s => s.h === k);
+
+    const parse = sp => {
+      const out = [], occ = {};
+      sp.s.split(" ").forEach((c, ci) => {
+        const m = c.match(/^(?:\[(.+?):(\w+)\]|([^\[\]]*?))([.,;:!?]*)$/);
+        const w = m[1] || m[3];
+        const id = m[2] || null;
+        const p = m[4];
+        if (w) {
+          const k = w.toLowerCase();
+          occ[k] = (occ[k] || 0) + 1;
+          out.push({ k: k + "#" + occ[k], w, id });
+        }
+        if (p) out.push({ k: "p" + ci, w: p, ns: 1 });
+      });
+      return out;
+    };
+
+    function prep(x) {
+      if (x.dataset.p) return;
+      x.dataset.p = 1;
+      let i = 0;
+      [...x.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const f = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(t => {
+            if (!t) return;
+            if (/^\s+$/.test(t)) return f.append(t);
+            const s = document.createElement("span");
+            s.className = "w";
+            s.style.setProperty("--d", Math.min(i++ * 16, 650) + "ms");
+            s.textContent = t;
+            f.append(s);
+          });
+          n.replaceWith(f);
+        } else if (n.nodeType === 1 && !n.classList.contains("x")) {
+          n.classList.add("w");
+          n.style.setProperty("--d", Math.min(i++ * 16, 650) + "ms");
+        }
+      });
+    }
+
+    function show(n, first) {
+      if (n < 0 || n >= S.length) return;
+      const sp = S[n], toks = parse(sp), keys = new Set(toks.map(t => t.k));
+      busy = true;
+      q(".x").forEach(x => x.hidden = true);
+      q("[aria-controls]").forEach(b => b.setAttribute("aria-expanded", "false"));
+
+      const leaving = [...els].filter(([k]) => !keys.has(k));
+      leaving.forEach(([, e]) => e.classList.add("out"));
+
+      const build = () => {
+        scrollTo(0, 0);
+        const F = new Map();
+        els.forEach((e, k) => {
+          if (keys.has(k)) F.set(k, e.getBoundingClientRect());
+        });
+
+        const next = new Map();
+        let nk = 0;
+        h.textContent = "";
+
+        toks.forEach((t, i) => {
+          let e = els.get(t.k);
+          const fresh = !e;
+          if (!e) e = document.createElement("span");
+          e.className = "tk" + (fresh && !RM ? " in" : "");
+          e.style.cssText = "";
+          if (fresh) e.style.setProperty("--k", nk++);
+          e.textContent = t.w;
+
+          ["role", "tabindex", "aria-expanded", "aria-controls"].forEach(a => e.removeAttribute(a));
+          if (i && !t.ns) h.append(" ");
+          h.append(e);
+          next.set(t.k, e);
+
+          if (t.id) {
+            const x = document.createElement("span");
+            x.className = "x";
+            x.id = sp.h + "-" + t.id;
+            x.hidden = true;
+            x.innerHTML = sp.x[t.id];
+            e.classList.add("m");
+            e.setAttribute("role", "button");
+            e.tabIndex = 0;
+            e.setAttribute("aria-expanded", "false");
+            e.setAttribute("aria-controls", x.id);
+            h.append(x);
+          }
+        });
+
+        els = next;
+        q(".x").forEach(prep);
+
+        if (!RM) {
+          els.forEach((e, k) => {
+            const f = F.get(k);
+            if (!f) return;
+            const l = e.getBoundingClientRect(), dx = f.left - l.left, dy = f.top - l.top;
+            if (dx || dy) {
+              e.style.transition = "none";
+              e.style.transform = `translate(${dx}px,${dy}px)`;
+            }
+          });
+        }
+
+        void h.offsetWidth;
+
+        requestAnimationFrame(() => els.forEach(e => {
+          if (e.style.transform) {
+            e.style.transition = "transform .9s cubic-bezier(.2,.7,.2,1)";
+            e.style.transform = "";
+          }
+        }));
+
+        h.style.transition = "transform .9s cubic-bezier(.2,.7,.2,1)";
+        h.style.setProperty("--p", "0px");
+
+        setTimeout(() => {
+          els.forEach(e => e.style.transition = "");
+          busy = false;
+        }, RM ? 0 : 1000);
+
+        cur = n;
+        document.title = sp.t;
+        if (!first) {
+          if (hint) hint.classList.add("off");
+          try { history.pushState(null, "", "#" + sp.h); } catch (e) {}
+        }
+      };
+
+      if (leaving.length && !RM && !first) setTimeout(build, 230);
+      else build();
+    }
+
+    const go = i => {
+      if (i < 0 || i === cur || busy) return;
+      show(i);
+    };
+    const step = d => {
+      const n = cur + d;
+      if (n >= 0 && n < S.length) go(n);
+    };
+
+    const atB = () => scrollY + innerHeight >= document.documentElement.scrollHeight - 4;
+    const atT = () => scrollY <= 2;
+
+    function toggle(b) {
+      const targetId = b.getAttribute("aria-controls");
+      if (!targetId) return;
+      const x = document.getElementById(targetId);
+      if (!x) return;
+      const o = b.getAttribute("aria-expanded") !== "true";
+      b.setAttribute("aria-expanded", o);
+      x.hidden = !o;
+
+      if (!o) {
+        x.querySelectorAll("[aria-controls]").forEach(n => {
+          n.setAttribute("aria-expanded", "false");
+          const childId = n.getAttribute("aria-controls");
+          if (childId) {
+            const childEl = document.getElementById(childId);
+            if (childEl) childEl.hidden = true;
+          }
+        });
+      }
+
+      if (o) {
+        setTimeout(() => {
+          const r = x.getBoundingClientRect();
+          const d = Math.min(r.bottom - innerHeight + 48, r.top - 72);
+          if (d > 0) scrollBy({ top: d, behavior: RM ? "auto" : "smooth" });
+        }, 80);
+      }
+    }
+
+    document.addEventListener("click", e => {
+      const g = e.target.closest("a.go");
+      if (g) {
+        e.preventDefault();
+        const targetHash = g.getAttribute("href").replace(/^#/, '');
+        go(idx(targetHash));
+        return;
+      }
+      const b = e.target.closest("[aria-controls]");
+      if (b) toggle(b);
+    });
+
+    addEventListener("keydown", e => {
+      const t = e.target;
+      if (t.classList && t.classList.contains("m") && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        toggle(t);
+        return;
+      }
+      if (e.key === "Escape") {
+        q(".x").forEach(x => x.hidden = true);
+        q("[aria-controls]").forEach(b => b.setAttribute("aria-expanded", "false"));
+        return;
+      }
+      if (t !== document.body && t !== document.documentElement) return;
+      if ((e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") && atB()) {
+        e.preventDefault();
+        step(1);
+      } else if ((e.key === "ArrowUp" || e.key === "PageUp") && atT()) {
+        e.preventDefault();
+        step(-1);
+      }
+    });
+
+    // Wheel event: leaning sentence animation
+    addEventListener("wheel", e => {
+      if (busy) { e.preventDefault(); return; }
+      const d = e.deltaY;
+      if ((d > 0 && !atB()) || (d < 0 && !atT())) return;
+      e.preventDefault();
+      acc = Math.max(-140, Math.min(140, acc + d));
+      if (!RM) {
+        h.style.transition = "transform .1s linear";
+        h.style.setProperty("--p", (acc * .35).toFixed(1) + "px");
+      }
+      if (Math.abs(acc) >= 100) {
+        const s = acc > 0 ? 1 : -1;
+        acc = 0;
+        step(s);
+      }
+      clearTimeout(idle);
+      idle = setTimeout(() => {
+        if (busy) return;
+        acc = 0;
+        h.style.transition = "transform .5s ease";
+        h.style.setProperty("--p", "0px");
+      }, 160);
+    }, { passive: false });
+
+    // Touch events for responsive mobile swipe
+    let ty = 0, tx = 0;
+    addEventListener("touchstart", e => {
+      ty = e.touches[0].clientY;
+      tx = e.touches[0].clientX;
+    }, { passive: true });
+
+    addEventListener("touchend", e => {
+      const dy = ty - e.changedTouches[0].clientY;
+      const dx = tx - e.changedTouches[0].clientX;
+      // Ensure vertical swipe priority over horizontal drift
+      if (Math.abs(dy) < 60 || Math.abs(dx) > Math.abs(dy) * 0.8 || busy) return;
+      if ((dy > 0 && atB()) || (dy < 0 && atT())) {
+        step(dy > 0 ? 1 : -1);
+      }
+    }, { passive: true });
+
+    addEventListener("hashchange", () => {
+      const i = idx(location.hash.slice(1));
+      if (i >= 0) go(i);
+    });
+
+    // Mouse proximity translation on interactive tokens
+    if (!RM) {
+      addEventListener("pointermove", e => {
+        if (e.pointerType !== "mouse" || busy) return;
+        q(".tk.m").forEach(b => {
+          const r = b.getBoundingClientRect();
+          const dx = e.clientX - (r.left + r.width / 2);
+          const dy = e.clientY - (r.top + r.height / 2);
+          const d = Math.hypot(dx, dy);
+          b.style.transform = d < 110 ? `translate(${(dx * .18).toFixed(1)}px,${(dy * .18).toFixed(1)}px)` : "";
+        });
+      });
+    }
+
+    // Initial render
+    show(Math.max(0, idx(location.hash.slice(1))), true);
+  </script>
+</body>
+</html>
